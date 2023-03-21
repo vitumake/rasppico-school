@@ -24,9 +24,7 @@ def btnHandler(btn, led):
             led.toggle()
             break
 
-
 buttonRot.irq(handler=offAll, trigger=Pin.IRQ_FALLING)
-
 
 while True:
     btnHandler(buttonW1, led)
