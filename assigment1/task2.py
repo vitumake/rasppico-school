@@ -25,7 +25,7 @@ while True:
     for b in arr:
         led4.value(0)
         time.sleep(1)
-        led4.value(1)
+        led4.toggle()
         led1.value(b[0])
         led2.value(b[1])
         led3.value(b[2])
