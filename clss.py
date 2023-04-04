@@ -3,9 +3,10 @@ from machine import PWM, Pin
 # Pico pin classes ala Make
 class Led(PWM):
     
-    def __init__(self, id:int, freq:int=2000, duty:int=500):
+    def __init__(self, id:int, name:str='none', freq:int=2000, duty:int=500):
         self.pin = Pin(id)
         self.conf = [freq, duty]
+        self.name = name
         self.state = False
         super().__init__(self.pin)
         
