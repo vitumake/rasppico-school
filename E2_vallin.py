@@ -26,15 +26,15 @@ def rfrshDisp():
 def off(Pin):
     for i in toggles:
         i[1].value(False)
-        rfrshDisp()
 
 Btn(12).irq(handler=off, trigger=Pin.IRQ_FALLING)
 
-rfrshDisp()
-
 while True:
+    
+    #draw
+    rfrshDisp()
+    
     # Toggle logic
     for i in toggles:
         if i[0].pulseCheck():
             i[1].toggle()
-            rfrshDisp()
