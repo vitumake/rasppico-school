@@ -15,8 +15,8 @@ def calcBPM(data):
     rising = False
     risngFst = None
     risgnSec = None
-    tresh = 800 # Treshold for finging rising edge
-    margin = 400
+    tresh = 1000 # Treshold for finging rising edge
+    margin = 500
     
     for i, val in enumerate(data.data):
         if not rising:
