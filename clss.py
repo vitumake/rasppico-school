@@ -1,6 +1,6 @@
 from machine import PWM, Pin
 
-# Pico pin classes ala Make
+# Classes for pico w go board
 class Led(PWM):
     
     def __init__(self, id:int, name:str='none', freq:int=2000, duty:int=500):
@@ -36,3 +36,27 @@ class Btn(Pin):
             return True
         elif self.value() == 1:
             self.state = False
+            
+# Init array with given size to avoid memory errors.
+class samplData:
+    def __init__(self, size) -> None:
+        self.size = size # Size of array
+        self.clear() # Using clear method to init rest of the vars
+        
+    # Method for pushing data
+    def put(self, val):
+        if not self.full:
+            self.data[self.cursor] = val
+            self.datasum += val
+            self.cursor += 1
+        if self.cursor == self.size: self.full = True
+    
+    # Method to clear data
+    def clear(self):
+        self.cursor = 0 # Array cursor for adding data to right place
+        self.full = False # Is array full
+        self.datasum = 0 # Sum of all values in array
+        self.data = [0 for i in range(self.size)]
+        
+    def average(self):
+        return self.datasum/self.cursor+1

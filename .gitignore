@@ -2,3 +2,6 @@
 .vscode
 *.pdf
 test.py
+./pdf/*
+./misc/*
+*.txt
