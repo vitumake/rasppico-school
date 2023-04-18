@@ -36,7 +36,7 @@ def calcBPM(data):
     if peakFst != None and peakSec != None:
         # Calculate time between indexes. Time between samples is 1/freq s.
         # BPS is 2nd - 1st * time between samples.
-        bpm = (int(peakSec) - int(peakFst)) * 1/freq * 60
+        bpm = (int(peakSec) - int(peakFst)) * (1/freq) * 60
     else: bpm = 0
     
     return f'{bpm} BPM' if bpm < 240 and bpm > 30 else 'Bad data'#, [tresh, margin], [peakFst, peakSec]
