@@ -7,6 +7,7 @@ adc = ADC(26)
 sampls = samplData(500)
 
 def recSampl(penis):
+    # Go in raw no filter
     sampls.put(adc.read_u16())
 
 tmr = Piotimer(mode=Piotimer.PERIODIC, freq=freq, callback=recSampl)
