@@ -13,34 +13,32 @@ def recSampl(penis):
 tmr = Piotimer(mode=Piotimer.PERIODIC, freq=freq, callback=recSampl)
 
 def calcBPM(data):
-    peakFst = peakSec = secVal = None
-    maxPeak = 0
+    maxPeak = indxPeak = 0
+    peaks = []
     tresh = sorted(data.data)[round(data.size/2)] # Treshold for finding rising edge (median)
-    margin = 100 # Margin when checking if value is under treshold
+    margin = 300 # Margin when checking if value is under treshold
     
     for i, val in enumerate(data.data): # Get value and index from arr
         # Check if we are looking for the first or second index
-        if not secVal:
-            # If first index is empty set the index
-            if val > maxPeak: 
-                peakFst = i
-                maxPeak = val
-            # Check if the value has dropped below the threshold to indicate that we can find the second value
-            elif val < tresh - margin and maxPeak > tresh:
-                secVal = True
-                maxPeak = 0
-        # Find the second index
-        elif val > maxPeak:
-            peakSec = i
+        if val > maxPeak:
             maxPeak = val
+            indxPeak = i
+        if val < tresh - margin and not indxPeak == 0 and not val == 0:
+            peaks.append(indxPeak)
+            indxPeak = maxPeak = 0
+            
     # Make sure both indexes are valid
-    if peakFst != None and peakSec != None:
+    if len(peaks) > 5:
         # Calculate time between indexes. Time between samples is 1/freq s.
         # BPS is 2nd - 1st * time between samples.
-        bpm = (int(peakSec) - int(peakFst)) * (1/freq) * 60
+        bpmDelta = []
+        for i in range(len(peaks)-1):
+            bpmDelta.append((int(peaks[i+1]) - int(peaks[i])) * (1/freq) * 60)
+        bpm = sum(peaks) / len(peaks)
     else: bpm = 0
     
-    return f'{bpm} BPM' if bpm < 240 and bpm > 30 else 'Bad data'#, [tresh, margin], [peakFst, peakSec]
+    
+    return f'{bpm} BPM' if bpm < 240 and bpm > 30 else 'Bad data', len(peaks)
         
 while True:
     if sampls.full:
