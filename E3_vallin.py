@@ -16,7 +16,7 @@ def calcBPM(data):
     peakFst = peakSec = secVal = None
     maxPeak = 0
     tresh = sorted(data.data)[round(data.size/2)] # Treshold for finding rising edge (median)
-    margin = 100 # Margin when checking if value is under treshold
+    margin = tresh*0.02 # Margin when checking if value is under treshold
     
     for i, val in enumerate(data.data): # Get value and index from arr
         # Check if we are looking for the first or second index
@@ -40,7 +40,7 @@ def calcBPM(data):
         bpm = (int(peakSec) - int(peakFst)) * (1/freq) * 60
     else: bpm = 0
     
-    return f'{bpm} BPM' if bpm < 240 and bpm > 30 else 'Bad data'#, [tresh, margin], [peakFst, peakSec]
+    return f'{bpm} BPM' if bpm < 240 and bpm > 30 else 'Bad data', [tresh, margin], [peakFst, peakSec]
         
 while True:
     if sampls.full:
