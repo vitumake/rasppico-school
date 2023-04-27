@@ -20,7 +20,12 @@ class Led(PWM):
             self.conf = [self.freq(), self.duty_u16()]
             self.freq(2000)
             self.duty_u16(0)
-            
+    
+    def brightness(self, val: int):
+        if val > 65535: val = 65535
+        elif val < 0: val = 0
+        self.duty_u16
+    
     def toggle(self):
         self.value(False) if self.state else self.value(True)
         

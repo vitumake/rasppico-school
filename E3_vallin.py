@@ -40,7 +40,7 @@ def calcBPM(data):
         bpm = (int(peakSec) - int(peakFst)) * (1/freq) * 60
     else: bpm = 0
     
-    return f'{bpm} BPM' if bpm < 240 and bpm > 30 else 'Bad data', [tresh, margin], [peakFst, peakSec]
+    return f'{bpm} BPM' if bpm < 240 and bpm > 30 else 'Bad data'#, [tresh, margin], [peakFst, peakSec]
         
 while True:
     if sampls.full:
