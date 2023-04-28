@@ -102,7 +102,8 @@ class SetM():
         print(self.prog)
         # Draw bar
         self.disp.rect(14, self.deltaY+12, self.prog+14, self.deltaY+18, 1, True)
-        self.disp.rect(self.prog+14, self.deltaY+12, 114, self.deltaY+18, 0, True)
+        # This to avoid  small gap when bar is full
+        if self.prog < 100: self.disp.rect(self.prog+14, self.deltaY+12, 114, self.deltaY+18, 0, True)
         
     def update(self, led: Led, val: int):
         self.prog += val
@@ -142,9 +143,9 @@ while True:
     if prevStep != step.value():
         if not step.value():
             if not dire.value():
-                mainM.select(-1) if Menu == 0 else setM.update(mainM.selection()[0][1], 7)
+                mainM.select(-1) if Menu == 0 else setM.update(mainM.selection()[0][1], 6)
             else:
-                mainM.select(1) if Menu == 0 else setM.update(mainM.selection()[0][1], -7)
+                mainM.select(1) if Menu == 0 else setM.update(mainM.selection()[0][1], -6)
     prevStep = step.value()
     
     # Rotary btn handler
