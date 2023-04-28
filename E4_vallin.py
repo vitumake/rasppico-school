@@ -78,8 +78,6 @@ class SetM():
         
     def show(self, led: Led):
         
-        # Progress value
-        self.prog = round(self.max/led.duty_u16()*100) if led.duty_u16() != 0 else 1
         
         # Clear screen
         self.disp.fill(0)
@@ -90,12 +88,18 @@ class SetM():
         # Bar border
         self.disp.rect(12, self.deltaY+10, 116, self.deltaY+20, 1, False)
 
+        # Progress value
+        self.prog = round(led.duty_u16()/self.max*100) if led.duty_u16() != 0 else 1
+
         # Draw bar
         self.showBar()
         
+        # Update screen
         self.disp.show()
         
+        
     def showBar(self):
+        print(self.prog)
         # Draw bar
         self.disp.rect(14, self.deltaY+12, self.prog+14, self.deltaY+18, 1, True)
         self.disp.rect(self.prog+14, self.deltaY+12, 114, self.deltaY+18, 0, True)
@@ -125,7 +129,7 @@ btn = Btn(12) # Rot button
 dire = Pin(10, Pin.IN, Pin.PULL_UP)
 step = Pin(11, Pin.IN, Pin.PULL_UP)
 
-# Rot last state
+# Set rot state
 prevStep = step.value()
 
 # Menu state
